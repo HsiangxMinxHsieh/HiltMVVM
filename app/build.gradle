@@ -72,9 +72,9 @@ dependencies {
 
     // timmymike tool
     implementation 'com.github.timmymike:LogTool:1.0.6'
-    implementation 'com.github.timmymike:ComponentTool:1.0.1'
-    implementation 'com.github.timmymike:ViewTool:1.1.0'
-    implementation 'com.github.timmymike:TimeTool:1.0.0'
+    implementation 'com.github.timmymike:componentTool:1.1.0'
+    implementation 'com.github.timmymike:ViewTool:1.1.1'
+    implementation 'com.github.timmymike:TimeTool:1.0.1'
 
 }
 
