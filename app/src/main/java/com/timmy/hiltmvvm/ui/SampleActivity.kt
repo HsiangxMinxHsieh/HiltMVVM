@@ -21,7 +21,7 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
         initData()
         binding.tvTest.run{
             isClickable = true
-            clickWithTrigger {
+            click {
                 loge("1觸發點擊！")
                 isSelected = !isSelected
             }
@@ -49,6 +49,9 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
         (binding.root as? ViewGroup)?.resetLayoutTextSize()
         viewModel.getLiveDataInRealm().observe(this) {
             logd("結果是=>${it.toJson()}")
+            viewModel.saveSampleData(it)
+            loge("儲存後取出的範例資料是=>${viewModel.getSampleData()}")
+            loge("儲存的call次數是=>${viewModel.plusCountAndGet()}")
         }
     }
 

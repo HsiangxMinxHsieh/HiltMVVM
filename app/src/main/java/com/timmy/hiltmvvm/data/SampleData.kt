@@ -1,4 +1,4 @@
-package com.timmy.hiltmvvm.database
+package com.timmy.hiltmvvm.data
 
 
 data class SampleData (

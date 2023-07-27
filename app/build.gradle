@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.timmy.hiltmvvm"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -71,10 +71,13 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.14.2'
 
     // timmymike tool
-    implementation 'com.github.timmymike:LogTool:1.0.6'
+    implementation 'com.github.timmymike:LogTool:1.0.7'
     implementation 'com.github.timmymike:componentTool:1.1.0'
     implementation 'com.github.timmymike:ViewTool:1.1.1'
     implementation 'com.github.timmymike:TimeTool:1.0.1'
+
+    implementation project(":dataStoreLibs")
+    implementation project(":SharedPreferenceLibs")
 
 }
 

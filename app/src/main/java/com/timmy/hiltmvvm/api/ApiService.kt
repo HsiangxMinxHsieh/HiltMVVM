@@ -1,5 +1,6 @@
 package com.timmy.hiltmvvm.api
 
+import com.timmy.sharedpreferencelibs.data.SampleDataFromAPI
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query

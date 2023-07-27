@@ -17,3 +17,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "HiltMVVM"
 include ':app'
+include ':dataStoreLibs'
+include ':SharedPreferenceLibs'

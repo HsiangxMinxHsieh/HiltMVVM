@@ -5,11 +5,12 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class SampleApplication : Application() {
+    init {
+        instance = this
+    }
 
-    override fun onCreate() {
-        super.onCreate()
-
-
+    companion object {
+        private lateinit var instance: SampleApplication
     }
 
 }
