@@ -3,7 +3,6 @@ package com.timmymike.assetslibs.repo
 import android.content.Context
 import com.timmymike.logtool.loge
 import com.timmymike.logtool.toDataBean
-import kotlin.io.readText
 
 /**
  *  author: timmy Hsieh

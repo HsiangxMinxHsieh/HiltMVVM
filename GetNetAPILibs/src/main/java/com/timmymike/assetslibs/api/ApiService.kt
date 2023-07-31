@@ -1,6 +1,6 @@
 package com.timmymike.assetslibs.api
 
-import com.timmy.sharedpreferencelibs.data.SampleDataFromAPI
+import com.timmymike.base.data.SampleDataFromAPI
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query

@@ -1,4 +1,4 @@
-package com.timmy.sharedpreferencelibs.data
+package com.timmymike.base.data
 
 import com.google.gson.annotations.SerializedName
 data class SampleDataFromAPI(

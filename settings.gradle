@@ -17,7 +17,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "HiltMVVM"
 include ':app'
-include ':dataStoreLibs'
+include ':DatastoreLibs'
 include ':SharedPreferenceLibs'
-include ':assetsLibs'
+include ':AssetsLibs'
 include ':GetNetAPILibs'
+include ':Base'

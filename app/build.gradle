@@ -65,18 +65,13 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     kapt 'com.github.bumptech.glide:compiler:4.14.2'
 
-    // timmymike tool
-    implementation 'com.github.timmymike:LogTool:1.0.7'
-    implementation 'com.github.timmymike:componentTool:1.1.0'
-    implementation 'com.github.timmymike:ViewTool:1.1.1'
-    implementation 'com.github.timmymike:TimeTool:1.0.1'
-
 
     // 取得資料Libs
-    implementation project(":dataStoreLibs")
     implementation project(":SharedPreferenceLibs")
-    implementation project(":assetsLibs")
+    implementation project(':AssetsLibs')
     implementation project(":GetNetAPILibs")
+    implementation project(':DatastoreLibs')
+    implementation project(':Base')
 
 }
 

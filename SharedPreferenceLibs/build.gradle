@@ -36,7 +36,6 @@ android {
 
 dependencies {
 
-//    implementation 'androidx.core:core-ktx:1.7.0'
 
     //hilt
     implementation "com.google.dagger:hilt-android:2.42"
@@ -49,4 +48,6 @@ dependencies {
     implementation 'com.github.timmymike:LogTool:1.0.7'
 
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation project(':Base')
+
 }

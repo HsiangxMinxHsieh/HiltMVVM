@@ -3,9 +3,9 @@ package com.timmy.sharedpreferencelibs.repo
 import android.content.Context
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.timmymike.base.data.SampleDataFromAPI
 import com.timmymike.logtool.toDataBean
 import com.timmymike.logtool.toJson
-import com.timmy.sharedpreferencelibs.data.SampleDataFromAPI
 import javax.inject.Inject
 
 /**
