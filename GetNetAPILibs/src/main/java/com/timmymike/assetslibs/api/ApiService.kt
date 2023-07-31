@@ -1,4 +1,4 @@
-package com.timmy.hiltmvvm.api
+package com.timmymike.assetslibs.api
 
 import com.timmy.sharedpreferencelibs.data.SampleDataFromAPI
 import retrofit2.http.GET

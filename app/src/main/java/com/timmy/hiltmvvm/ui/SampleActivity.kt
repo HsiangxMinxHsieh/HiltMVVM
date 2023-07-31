@@ -51,7 +51,6 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
             logd("結果是=>${it.toJson()}")
             viewModel.saveSampleData(it)
             loge("儲存後取出的範例資料是=>${viewModel.getSampleData()}")
-            loge("儲存的call次數是=>${viewModel.plusCountAndGet()}")
         }
     }
 

@@ -19,3 +19,5 @@ rootProject.name = "HiltMVVM"
 include ':app'
 include ':dataStoreLibs'
 include ':SharedPreferenceLibs'
+include ':assetsLibs'
+include ':GetNetAPILibs'

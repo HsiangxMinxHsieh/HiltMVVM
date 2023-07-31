@@ -1,12 +1,12 @@
 plugins {
     id 'com.android.library'
-    id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
 }
 
 android {
-    namespace 'com.timmy.datastorelibs'
+    namespace 'com.timmymike.getnetapi'
     compileSdk 33
 
     defaultConfig {
@@ -23,7 +23,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -32,18 +31,28 @@ android {
     kotlinOptions {
         jvmTarget = '11'
     }
-
 }
 
 dependencies {
 
+//    implementation 'androidx.core:core-ktx:1.7.0'
+//    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'com.google.android.material:material:1.9.0'
 
     //hilt
     implementation "com.google.dagger:hilt-android:2.42"
+    implementation project(path: ':SharedPreferenceLibs')
     kapt "com.google.dagger:hilt-android-compiler:2.42"
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
 
-    // DataStore
-    api "androidx.datastore:datastore-preferences:1.0.0"
-    implementation "androidx.datastore:datastore-preferences-core:1.0.0"
+    // timmymike tool
+    implementation 'com.github.timmymike:LogTool:1.0.7'
+    implementation 'com.github.timmymike:TimeTool:1.0.1'
+
+    //Retrofit
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+
 }

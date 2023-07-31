@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DataStoreModule {
+class PreferenceModule {
 
     @Provides
     @Singleton

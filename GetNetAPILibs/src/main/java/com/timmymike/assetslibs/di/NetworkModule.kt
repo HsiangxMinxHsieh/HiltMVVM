@@ -1,4 +1,4 @@
-package com.timmy.hiltmvvm.di
+package com.timmymike.assetslibs.di
 
 import dagger.Module
 import dagger.Provides

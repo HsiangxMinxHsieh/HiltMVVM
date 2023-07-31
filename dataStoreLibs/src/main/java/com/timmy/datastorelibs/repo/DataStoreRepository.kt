@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -16,18 +17,23 @@ import javax.inject.Inject
 /**
  * 非同步的取值方法
  */
-class DataStoreRepository @Inject constructor(private val context: Application) {
+class DataStoreRepository @Inject constructor(context: Application) {
 
-    private val PREFERENCE_NAME = "DataStore"
+    private val DATASTORE_NAME = "DataStore"
 
     private val Context._dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = PREFERENCE_NAME,
+        name = DATASTORE_NAME,
     )
 
     val dataStore: DataStore<Preferences> = context._dataStore
 
+    suspend fun saveData(key: Preferences.Key<String>,value:String) {
+        dataStore.edit { mutablePreferences ->
+            mutablePreferences[key] =value
+        }
+    }
 
-    fun readData(): Flow<Any> =
+    fun readData(key: Preferences.Key<String>): Flow<String> =
         dataStore.data
             .catch {
                 // 当读取数据遇到错误时，如果是 `IOException` 异常，发送一个 emptyPreferences，来重新使用
@@ -39,8 +45,12 @@ class DataStoreRepository @Inject constructor(private val context: Application) 
                     throw it
                 }
             }.map { preferences ->
-                preferences[PreferencesKeys.loginResponseKey] ?: false
+                preferences[key] ?: "nothing"
             }
+
+//    fun Any.collect(collector: FlowCollector<String>) {
+//
+//    }
 
 }
 
