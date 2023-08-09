@@ -18,32 +18,12 @@ import javax.inject.Inject
  */
 class DataStoreRepository @Inject constructor(context: Application) {
 
+
     private val Context._dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = PreferencesKeys.DATASTORE_NAME,
+        name = DATASTORE_NAME,
     )
 
     val dataStore: DataStore<Preferences> = context._dataStore
-
-    var sampleData: SampleDataFromAPI
-        get() = runBlocking {
-            kotlin.runCatching {
-                readData(PreferencesKeys.sampleDataKey).firstOrNull()
-                    ?.toDataBean(SampleDataFromAPI::class.java)
-            }.getOrNull() ?: SampleDataFromAPI()
-        }
-        set(value) = runBlocking { saveData(PreferencesKeys.sampleDataKey, value.toJson()) }
-
-    var sampleString: String
-        get() = runBlocking { readData(PreferencesKeys.sampleStringKey).first() }
-        set(value) = runBlocking { saveData(PreferencesKeys.sampleStringKey, value) }
-
-    var sampleBoolean: Boolean
-        get() = runBlocking { readData(PreferencesKeys.sampleBooleanKey).first() }
-        set(value) = runBlocking { saveData(PreferencesKeys.sampleBooleanKey, value) }
-
-    var sampleInt: Int
-        get() = runBlocking { readData(PreferencesKeys.sampleIntKey).first() }
-        set(value) = runBlocking { saveData(PreferencesKeys.sampleIntKey, value) }
 
     private suspend fun <T> saveData(key: Preferences.Key<T>, value: T) {
         dataStore.edit { mutablePreferences ->
@@ -65,14 +45,42 @@ class DataStoreRepository @Inject constructor(context: Application) {
                 preferences[key] ?: defaultValue
             }
 
-}
+    companion object {
+        const val DATASTORE_NAME = "DataStore"
 
-object PreferencesKeys {
-    const val DATASTORE_NAME = "DataStore"
+        // Key總覽
 
-    val sampleStringKey = stringPreferencesKey("user_info_response_Key")
-    val sampleDataKey = stringPreferencesKey("Sample_Data_Response_Key")
-    val sampleLongKey = longPreferencesKey("Sample_Long_Key")
-    val sampleIntKey = intPreferencesKey("Sample_Int_Key")
-    val sampleBooleanKey = booleanPreferencesKey("Sample_boolean_Key")
+        val sampleStringKey = stringPreferencesKey("user_info_response_Key")
+        val sampleDataKey = stringPreferencesKey("Sample_Data_Response_Key")
+        val sampleLongKey = longPreferencesKey("Sample_Long_Key")
+        val sampleIntKey = intPreferencesKey("Sample_Int_Key")
+        val sampleBooleanKey = booleanPreferencesKey("Sample_boolean_Key")
+
+    }
+
+    // 儲存值總覽
+
+    var sampleData: SampleDataFromAPI
+        get() = runBlocking {
+            kotlin.runCatching {
+                readData(sampleDataKey).firstOrNull()
+                    ?.toDataBean(SampleDataFromAPI::class.java)
+            }.getOrNull() ?: SampleDataFromAPI()
+        }
+        set(value) = runBlocking { saveData(sampleDataKey, value.toJson()) }
+
+    var sampleString: String
+        get() = runBlocking { readData(sampleStringKey).first() }
+        set(value) = runBlocking { saveData(sampleStringKey, value) }
+
+    var sampleBoolean: Boolean
+        get() = runBlocking { readData(sampleBooleanKey).first() }
+        set(value) = runBlocking { saveData(sampleBooleanKey, value) }
+
+    var sampleInt: Int
+        get() = runBlocking { readData(sampleIntKey).first() }
+        set(value) = runBlocking { saveData(sampleIntKey, value) }
+
+
+
 }

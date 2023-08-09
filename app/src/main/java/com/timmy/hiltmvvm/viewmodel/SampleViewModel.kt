@@ -3,7 +3,6 @@ package com.timmy.hiltmvvm.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.timmy.datastorelibs.repo.DataStoreRepository
-import com.timmy.datastorelibs.repo.PreferencesKeys
 import com.timmy.sharedpreferencelibs.repo.SharedPreferencesRepository
 import com.timmymike.assetslibs.repo.AssetsRepository
 import com.timmymike.assetslibs.repo.GetAPIRepository
@@ -29,7 +28,7 @@ class SampleViewModel @Inject constructor(
         viewModelScope.launch {
             dsRepo.sampleString = "bbbggg4417723"
             loge("DataStore取得同步結果=>[${dsRepo.sampleString}]")
-            (dsRepo.readData(PreferencesKeys.sampleStringKey, "Default Value") as Flow<String>).collect { storedData -> loge("DataStore取得非同步結果=>[$storedData]") }
+            (dsRepo.readData(DataStoreRepository.sampleStringKey, "Default Value") as Flow<String>).collect { storedData -> loge("DataStore取得非同步結果=>[$storedData]") }
         }
 
         // GetAPIRepository
