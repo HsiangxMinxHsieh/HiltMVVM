@@ -25,10 +25,11 @@ class SampleViewModel @Inject constructor(
 
     fun getData() {
 
-        // DataStoreRepository
+        // DataStoreRepository 非同步方案
         viewModelScope.launch {
-            dsRepo.saveData(PreferencesKeys.loginResponseKey, "ggg4417723")
-            (dsRepo.readData(PreferencesKeys.loginResponseKey) as Flow<String>).collect { storedData -> loge("DataStore取得結果=>$storedData") }
+            dsRepo.sampleString = "bbbggg4417723"
+            loge("DataStore取得同步結果=>[${dsRepo.sampleString}]")
+            (dsRepo.readData(PreferencesKeys.sampleStringKey, "Default Value") as Flow<String>).collect { storedData -> loge("DataStore取得非同步結果=>[$storedData]") }
         }
 
         // GetAPIRepository
@@ -45,13 +46,21 @@ class SampleViewModel @Inject constructor(
     }
 
     // SharedPreferencesRepository
-    fun saveSampleData(value: SampleDataFromAPI) {
+    fun saveSampleDataToSP(value: SampleDataFromAPI) {
         spRepo.sampleData = value
     }
 
-    //GetAPIRepository
-    fun getSampleData() = spRepo.sampleData
+    fun getSampleDataFromSP() = spRepo.sampleData
 
+
+    // DataStoreRepository 同步方案
+    fun saveSampleDataToDataStore(value: SampleDataFromAPI) {
+        dsRepo.sampleData = value
+    }
+
+    fun getSampleDataFromDataStore() = dsRepo.sampleData
+
+    // GetAPIRepository Live Data
     fun getLiveDataInRealm() = getAPIRepository.getLiveDataInRealm()
 
 }
