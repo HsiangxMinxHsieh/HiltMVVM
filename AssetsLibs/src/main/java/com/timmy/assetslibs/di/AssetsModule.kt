@@ -1,7 +1,7 @@
-package com.timmymike.assetslibs.di
+package com.timmy.assetslibs.di
 
 import android.content.Context
-import com.timmymike.assetslibs.repo.AssetsRepository
+import com.timmy.assetslibs.repo.AssetsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

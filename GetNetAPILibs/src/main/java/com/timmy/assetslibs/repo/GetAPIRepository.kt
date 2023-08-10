@@ -1,8 +1,8 @@
-package com.timmymike.assetslibs.repo
+package com.timmy.assetslibs.repo
 
 import androidx.lifecycle.MutableLiveData
-import com.timmymike.assetslibs.api.ApiService
-import com.timmymike.base.data.SampleDataFromAPI
+import com.timmy.assetslibs.api.ApiService
+import com.timmy.base.data.SampleDataFromAPI
 import retrofit2.Retrofit
 import javax.inject.Inject
 

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.timmymike.base'
+    namespace 'com.timmy.base'
     compileSdk 33
 
     defaultConfig {

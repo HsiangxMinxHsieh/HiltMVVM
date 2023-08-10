@@ -1,7 +1,7 @@
 package com.timmy.sharedpreferencelibs.repo
 
 import android.content.Context
-import com.timmymike.base.data.SampleDataFromAPI
+import com.timmy.base.data.SampleDataFromAPI
 import com.timmymike.logtool.toDataBean
 import com.timmymike.logtool.toJson
 import javax.inject.Inject

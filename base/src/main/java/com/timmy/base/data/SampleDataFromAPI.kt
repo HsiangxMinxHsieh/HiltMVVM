@@ -1,6 +1,7 @@
-package com.timmymike.base.data
+package com.timmy.base.data
 
 import com.google.gson.annotations.SerializedName
+
 data class SampleDataFromAPI(
     @SerializedName("__extras")
     val extras: Extras = Extras(),

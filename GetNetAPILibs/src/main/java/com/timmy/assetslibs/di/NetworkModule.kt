@@ -1,4 +1,4 @@
-package com.timmymike.assetslibs.di
+package com.timmy.assetslibs.di
 
 import dagger.Module
 import dagger.Provides

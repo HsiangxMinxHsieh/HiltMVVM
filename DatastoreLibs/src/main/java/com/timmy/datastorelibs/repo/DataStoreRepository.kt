@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
-import com.timmymike.base.data.SampleDataFromAPI
+import com.timmy.base.data.SampleDataFromAPI
 import com.timmymike.logtool.toDataBean
 import com.timmymike.logtool.toJson
 import kotlinx.coroutines.flow.*

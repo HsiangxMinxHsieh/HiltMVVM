@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.timmymike.assetslibs'
+    namespace 'com.timmy.assetslibs'
     compileSdk 33
 
     defaultConfig {
