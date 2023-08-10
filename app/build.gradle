@@ -71,6 +71,7 @@ dependencies {
     implementation project(':AssetsLibs')
     implementation project(":GetNetAPILibs")
     implementation project(':DatastoreLibs')
+    implementation project(':RoomLibs')
     implementation project(':Base')
 
 }

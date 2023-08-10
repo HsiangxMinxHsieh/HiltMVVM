@@ -9,6 +9,7 @@ import com.timmy.hiltmvvm.viewmodel.SampleViewModel
 import com.timmymike.componenttool.BaseActivity
 import com.timmymike.logtool.logd
 import com.timmymike.logtool.loge
+import com.timmymike.logtool.toDataBeanList
 import com.timmymike.logtool.toJson
 import com.timmymike.viewtool.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,13 +51,17 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
         }
         (binding.root as? ViewGroup)?.resetLayoutTextSize()
         viewModel.getLiveDataInRealm().observe(this) {
-            logd("結果是=>${it.toJson()}")
+            logd("API取得結果是=>${it.toJson()}")
 
             viewModel.saveSampleDataToSP(it)
             loge("SharedPreference 儲存後取出的範例資料是=>${viewModel.getSampleDataFromSP()}")
 
             viewModel.saveSampleDataToDataStore(it)
             loge("DataStore 儲存後取出的範例資料是=>${viewModel.getSampleDataFromDataStore()}")
+
+            viewModel.saveSampleDataToRoom(it.records.toJson().toDataBeanList())
+            loge("Room 儲存後取出的範例資料數量是=>${viewModel.getRoomSampleDataSize()}")
+
         }
     }
 

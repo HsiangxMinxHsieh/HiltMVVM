@@ -6,6 +6,8 @@ import com.timmy.assetslibs.repo.AssetsRepository
 import com.timmy.assetslibs.repo.GetAPIRepository
 import com.timmy.base.data.SampleDataFromAPI
 import com.timmy.datastorelibs.repo.DataStoreRepository
+import com.timmy.roomlibs.database.tables.sample.SampleData
+import com.timmy.roomlibs.repo.RoomRepo
 import com.timmy.sharedpreferencelibs.repo.SharedPreferencesRepository
 import com.timmymike.logtool.loge
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SampleViewModel @Inject constructor(
+    private val roomRepo: RoomRepo,
     private val spRepo: SharedPreferencesRepository,
     private val dsRepo: DataStoreRepository,
     private val asRepo: AssetsRepository,
@@ -61,5 +64,9 @@ class SampleViewModel @Inject constructor(
 
     // GetAPIRepository Live Data
     fun getLiveDataInRealm() = getAPIRepository.getLiveDataInRealm()
+
+    fun saveSampleDataToRoom(value: List<SampleData>) = roomRepo.insertSampleDataList(value)
+
+    fun getRoomSampleDataSize() = roomRepo.getSampleDataList().size
 
 }
