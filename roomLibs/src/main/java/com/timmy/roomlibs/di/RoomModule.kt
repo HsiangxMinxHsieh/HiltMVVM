@@ -32,9 +32,7 @@ object RoomModule {
     fun provideAppDataBase(application: Application): AppDataBase {
         return Room
             .databaseBuilder(application, AppDataBase::class.java, "hiltMvvm.db")
-//            .addMigrations(
-//                UpdateExt.MIGRATION_1_2,/* UpdateExt.MIGRATION_2_3,UpdateExt.MIGRATION_3_4*/
-//            ) // 容許已上線的資料庫的更新 // 注意，若資料表有新增欄位，必須要可以為null。
+//            .addMigrations(*UpdateExt.availableMigration) // 容許已上線的資料庫的更新 // 注意，若資料表有新增欄位，必須要可以為null。
             .fallbackToDestructiveMigration()// 破壞性更新(更新db版本號 會把資料庫都清空重建) 如果要自己 addMigrations 的話不用這行
             .allowMainThreadQueries()
             .build()

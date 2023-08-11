@@ -14,5 +14,5 @@ data class SampleData(
     val value4: String = "",
     val value5: String = "",
     val value6: String = "",
-    val value7: String = ""
+    val value7: String? = ""
 )

@@ -15,7 +15,7 @@ import com.timmy.roomlibs.database.tables.sample.SampleData
 
 @Database(
     entities = [SampleData::class],
-    version = 1, exportSchema = false
+    version = UpdateExt.databaseVersion, exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
 
