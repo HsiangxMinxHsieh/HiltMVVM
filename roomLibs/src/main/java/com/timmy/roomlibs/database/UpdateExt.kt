@@ -2,61 +2,71 @@ package com.timmy.roomlibs.database
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.timmy.roomlibs.database.tables.sample.SampleData
 import com.timmymike.logtool.loge
-import com.timmymike.logtool.toJsonAndLoge
 
 object UpdateExt {
 
 
 //
-//    /**DB 範例版本號升級 20230810*/
-//    val MIGRATION_3_4: Migration = object : Migration(3, 4) {
-//        override fun migrate(db: SupportSQLiteDatabase) {
-//            //DB 版本號升級
-//            val map = mutableMapOf<String, String>()
-//            map["id"] = "INTEGER"
-//            map["name"] = "TEXT"
-//            map["updateTime"] = "INTEGER"
-//            createTable(
-//                db,
-//                "PersonEntity",
-//                map.keys.toTypedArray(), // Key 的 array
-//                map.values.toTypedArray(), // Type 的 array
-//                arrayOf("id") // PrimaryKey
-//            )
-//        }
-//    }
-
-
     /**DB 範例版本號升級 20230810*/
-    val MIGRATION_2_3: Migration = object : Migration(2, 3) {
-        override fun migrate(db: SupportSQLiteDatabase) {
-            //DB 版本號升級
-            addColumn(db, "SampleData", "value7", "TEXT")
-        }
-    }
-
-    /**DB 範例版本號升級 20230810 */
     val MIGRATION_1_2: Migration = object : Migration(1, 2) {
         override fun migrate(db: SupportSQLiteDatabase) {
             //DB 版本號升級
-//            getColumnNamesAndTypes(db, "SampleData")
-            deleteColumn(db, "SampleData", "value7")
+            val map = mutableMapOf<String, String>()
+            map["id"] = "INTEGER"
+            map["name"] = "TEXT"
+            map["client_id"] = "TEXT"
+            map["updateTime"] = "INTEGER"
+            createTable(
+                db,
+                "PersonEntity",
+                map.keys.toTypedArray(), // Key 的 array
+                map.values.toTypedArray(), // Type 的 array
+                arrayOf("id") // PrimaryKey
+            )
+        }
+    }
+
+//
+//    /**DB 範例版本號升級 20230810*/
+//    val MIGRATION_2_3: Migration = object : Migration(2, 3) {
+//        override fun migrate(db: SupportSQLiteDatabase) {
+//            //DB 版本號升級
+//            addColumn(db, "SampleData", "value7", "TEXT")
+//        }
+//    }
+
+    /**DB 範例版本號升級 20230810 */
+    val MIGRATION_2_3: Migration = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            //DB 版本號升級
+            deleteColumn(db, "PersonEntity", "client_id")
         }
     }
 
     /**
      * 修改資料庫欄位的步驟：
      * 0.將Package table 內的 entity ， 依照想要的做修正
-     * 1.新增 MIGRATION變數，並確定Migration(old,new) 的old和new是正確的
+     * 1.新增 MIGRATION 變數，並確定Migration(old,new) 的old和new是正確的
      * 2.將新增之 MIGRATION變數 加入至 availableMigration 中
-     * 3.修改 databaseVersion 為 new
+     * 3.修改  [databaseVersion] 為 new Version
      * */
 
-    val availableMigration = arrayOf<Migration>(/*MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5*/)
-    val availableEntity = arrayOf(SampleData::class)
-    const val databaseVersion = 1
+    val availableMigration = arrayOf<Migration>(MIGRATION_1_2, MIGRATION_2_3/*MIGRATION_2_3,  MIGRATION_3_4, MIGRATION_4_5*/)
+    const val databaseVersion = 3
+
+    /**
+     * 新增資料表的步驟：
+     * 0.在Package table 內，新增 entity、DAO
+     * 1.在[com.timmy.roomlibs.database.AppDataBase]中，新增Dao、entities=[]的中括號內新增該類別。
+     * 2.新增MIGRATION 變數，並確定Migration(old,new) 的old和new是正確的
+     * 3.將新增之 MIGRATION變數 加入至 availableMigration 中
+     * 4.修改 [databaseVersion] 為 new Version
+     *
+     * 後續使用：
+     * 1.在[com.timmy.roomlibs.di.RoomModule]新增 provide Dao 方法
+     * 2.在[com.timmy.roomlibs.repo]資料夾中，新增專用或者是其他Repo去引用此Dao的類別或方法
+     * */
 
     /** 新增欄位 */
     private fun addColumn(database: SupportSQLiteDatabase, table: String, col: String, type: String = "TEXT") {
@@ -65,45 +75,37 @@ object UpdateExt {
 
     /** 刪除欄位 */
     private fun deleteColumn(database: SupportSQLiteDatabase, table: String, col: String) {
-        val columnsMap = getColumnNamesAndTypes(database, table)
+        getColumnNamesAndTypes(database, table).let { columnsMap ->
+            if (columnsMap.containsKey(col)) {
+                val tempTableName = "temp_$table"
+                val createTempTableStatement = buildCreateTableStatement(tempTableName, columnsMap, col)
 
-        if (columnsMap.containsKey(col)) {
-            val tempTableName = "temp_$table"
-            val createTempTableStatement = buildCreateTableStatement(tempTableName, columnsMap, col)
+                database.execSQL(createTempTableStatement)
 
-            // 創建臨時表
-            database.execSQL(createTempTableStatement)
+                val columnNamesWithoutExcluded = columnsMap.keys.filter { it != col }
+                val insertColumns = columnNamesWithoutExcluded.sortedByDescending { it }.joinToString(", ")
+                database.execSQL("INSERT INTO $tempTableName ($insertColumns) SELECT $insertColumns FROM $table;")
 
-            // 複製資料到臨時表，排除要刪除的欄位
-            val columnNamesWithoutExcluded = columnsMap.keys.filter { it != col }
-            val insertColumns = columnNamesWithoutExcluded.sortedByDescending { it }.joinToString(", ")
-            database.execSQL("INSERT INTO $tempTableName ($insertColumns) SELECT $insertColumns FROM $table;")
+                database.execSQL("DROP TABLE $table;")
 
-            // 刪除原始表
-            database.execSQL("DROP TABLE $table;")
+                val createTableStatement = buildCreateTableStatement(table, columnsMap, col)
+                database.execSQL(createTableStatement)
 
-            // 重新建立原始表
-            val createTableStatement = buildCreateTableStatement(table, columnsMap, col)
-            database.execSQL(createTableStatement)
+                database.execSQL("INSERT INTO $table ($insertColumns) SELECT $insertColumns FROM $tempTableName;")
 
-            // 複製資料回原始表
-//            val insertColumnsOriginal = columnsMap.keys.joinToString(", ")
-            database.execSQL("INSERT INTO $table ($insertColumns) SELECT $insertColumns FROM $tempTableName;")
-
-            // 刪除臨時表
-            database.execSQL("DROP TABLE $tempTableName;")
-        } else {
-            // 如果欄位不存在，可能需要處理錯誤或提供其他處理邏輯
+                database.execSQL("DROP TABLE $tempTableName;")
+            } else {
+                loge("欄位 ${col} 於 資料表 ${table} 中不存在!")
+            }
         }
     }
 
     private fun buildCreateTableStatement(tableName: String, columnsMap: Map<String, Triple<String, Boolean, Int>>, excludedColumn: String): String {
-        val columnDefinitions = columnsMap.filterKeys { it != excludedColumn }.map { (name, pair) ->
-            val (type, notNull, keyPos) = pair
+        val columnDefinitions = columnsMap.filterKeys { it != excludedColumn }.map { (name, triple) ->
+            val (type, notNull, _) = triple
             "$name $type${if (notNull) " NOT NULL" else ""}"
         }
-        return "CREATE TABLE $tableName (${columnDefinitions.joinToString(", ")},PRIMARY KEY (${columnsMap.filter { it.value.third != 0 }.keys.joinToString(", ")}));".apply { loge("即將執行Create的statement=>$this") }
-
+        return "CREATE TABLE $tableName (${columnDefinitions.joinToString(", ")},PRIMARY KEY (${columnsMap.filter { it.value.third != 0 }.keys.joinToString(", ")}));"
     }
 
     // 查詢指定表格的資訊，並返回一個包含欄位名稱和欄位類型的 Map。您可以在 deleteColumn 函式內使用這個 getColumnNamesAndTypes 函式來獲取要刪除的欄位的資訊，然後根據這些資訊進行適當的刪除操作。
@@ -119,15 +121,10 @@ object UpdateExt {
                 val notNull = it.getInt(3) == 1 // 使用索引 3 獲取 not null 屬性
                 val keyPosition = it.getInt(cursor.getColumnIndex("pk").takeIf { index -> index != -1 } ?: 0) // 使用索引 4 獲取 primaryKeyPosition 屬性
                 columnsMap[columnName] = Triple(columnType, notNull, keyPosition)
-
             }
         }
 
-        return columnsMap.apply {
-            this.toJsonAndLoge("key,value->")
-//            logeKeyAll("testKey->")
-//            logeValueAll("testValue->")
-        }
+        return columnsMap
 
     }
 

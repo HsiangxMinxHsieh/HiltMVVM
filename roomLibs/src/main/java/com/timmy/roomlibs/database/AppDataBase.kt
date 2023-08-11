@@ -4,6 +4,8 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.timmy.roomlibs.database.tables.sample.SampleDao
 import com.timmy.roomlibs.database.tables.sample.SampleData
+import com.timmy.roomlibs.database.tables.testdata.PersonDao
+import com.timmy.roomlibs.database.tables.testdata.PersonEntity
 
 /**
  * <pre>
@@ -14,11 +16,11 @@ import com.timmy.roomlibs.database.tables.sample.SampleData
  */
 
 @Database(
-    entities = [SampleData::class],
+    entities = [PersonEntity::class, SampleData::class],
     version = UpdateExt.databaseVersion, exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {
 
-    //    abstract fun personDao(): PersonDao
+    abstract fun personDao(): PersonDao
     abstract fun sampleDao(): SampleDao
 }

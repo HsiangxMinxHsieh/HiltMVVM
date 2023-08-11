@@ -7,10 +7,7 @@ import com.timmy.hiltmvvm.R
 import com.timmy.hiltmvvm.databinding.ActivitySampleBinding
 import com.timmy.hiltmvvm.viewmodel.SampleViewModel
 import com.timmymike.componenttool.BaseActivity
-import com.timmymike.logtool.logd
-import com.timmymike.logtool.loge
-import com.timmymike.logtool.toDataBeanList
-import com.timmymike.logtool.toJson
+import com.timmymike.logtool.*
 import com.timmymike.viewtool.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,11 +19,26 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initData()
-        binding.tvTest.run{
+
+        val nameList = listOf(
+            "Alice", "Bob", "Charlie", "David", "Emma", "Frank", "Grace", "Henry", "Ivy", "Jack",
+            "Kelly", "Liam", "Mia", "Noah", "Olivia", "Peter", "Quinn", "Ryan", "Sophia", "Thomas",
+            "Ursula", "Victor", "Willow", "Xander", "Yvonne", "Zane", "Amelia", "Benjamin", "Chloe",
+            "Daniel", "Ella", "Finn", "Gabriella", "Hannah", "Isaac", "Julia", "Kevin", "Lily", "Mason",
+            "Nora", "Oscar", "Penelope", "Quincy", "Riley", "Samuel", "Taylor", "Uma", "Vincent", "Wendy",
+            "Xavier", "Yasmine", "Zara", "Ava", "Brody", "Cora", "Dylan", "Eleanor", "Felix", "Georgia",
+            "Harper", "Isaiah", "Jasmine", "Kai", "Luna", "Mila", "Nathan", "Oliver", "Piper", "Quincy",
+            "Ruby", "Sebastian", "Tessa", "Ulysses", "Violet", "Wyatt", "Xena", "Yara", "Zachary"
+        )
+
+        binding.tvTest.run {
             isClickable = true
             click {
                 loge("1觸發點擊！")
                 isSelected = !isSelected
+                viewModel.savePerson(nameList.random())
+
+                viewModel.getPersonData().toList().logeAll("測試資料輸出=>")
             }
 
 //            setTextSize(14)
@@ -35,10 +47,10 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
                 setPadding(it, it, it, it)
             }
             loge("tv1佔比總寬度=>${this.getRealityWidth().toFloat() / getScreenWidthPixels()}")
-            setClickTextColorStateById(android.R.color.holo_green_dark, android.R.color.holo_blue_dark,R.color.purple_700)
+            setClickTextColorStateById(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, R.color.purple_700)
 
             background = setClickBgState(
-                getRoundBg(500,android.R.color.holo_purple,android.R.color.black,20),
+                getRoundBg(500, android.R.color.holo_purple, android.R.color.black, 20),
                 getRectangleBg(tldp = 40, trdp = 0, brdp = 40, left = false, bgColorID = android.R.color.black, strokeWidth = 10, strokeColorID = R.color.teal_200),
                 getRectangleBg(tldp = 40, trdp = 0, brdp = 40, left = false, bottom = false, bgColorID = android.R.color.white, strokeWidth = 10, strokeColorID = R.color.purple_700),
             )

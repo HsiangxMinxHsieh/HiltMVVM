@@ -3,7 +3,7 @@ package com.timmy.roomlibs.database.tables.sample
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "SampleData")
+@Entity
 data class SampleData(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val item1: String = "",
