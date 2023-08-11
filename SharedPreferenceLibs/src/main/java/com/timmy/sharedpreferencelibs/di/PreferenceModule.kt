@@ -10,11 +10,11 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
- * <pre>
- *     author: dhl
- *     date  : 2020/10/2
- *     desc  :
- * </pre>
+ *
+ *     author: Timmy
+ *     date  : 2023/08/11
+ *     desc  : 注入 SharedPreferencesRepository 的 Module
+ *
  */
 
 @Module

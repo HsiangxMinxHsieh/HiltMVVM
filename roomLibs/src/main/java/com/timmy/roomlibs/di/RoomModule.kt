@@ -3,7 +3,6 @@ package com.timmy.roomlibs.di
 import android.app.Application
 import androidx.room.Room
 import com.timmy.roomlibs.database.AppDataBase
-import com.timmy.roomlibs.database.UpdateExt
 import com.timmy.roomlibs.database.tables.sample.SampleDao
 import com.timmy.roomlibs.database.tables.testdata.PersonDao
 import dagger.Module
@@ -13,11 +12,11 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
- * <pre>
- *     author: dhl
- *     date  : 2020/6/30
- *     desc  :
- * </pre>
+ *
+ *     author: Timmy
+ *     date  : 2023/08/11
+ *     desc  : Hilt依賴注入，用於提供AppDataBase和資料存取介面Dao
+ *
  */
 
 @Module
@@ -34,8 +33,8 @@ object RoomModule {
     fun provideAppDataBase(application: Application): AppDataBase {
         return Room
             .databaseBuilder(application, AppDataBase::class.java, "hiltMvvm.db")
-            .addMigrations(*UpdateExt.availableMigration) // 容許已上線的資料庫的更新 // 注意，若資料表有新增欄位，必須要可以為null。
-//            .fallbackToDestructiveMigration()// 破壞性更新(更新db版本號 會把資料庫都清空重建) 如果要自己 addMigrations 的話不用這行
+//            .addMigrations(*UpdateExt.availableMigration) // 容許已上線的資料庫的更新 // 注意，若資料表有新增欄位，必須要可以為null。
+            .fallbackToDestructiveMigration()// 破壞性更新(更新db版本號 會把資料庫都清空重建) 如果要自己 addMigrations 的話不用這行
             .allowMainThreadQueries()
             .build()
     }

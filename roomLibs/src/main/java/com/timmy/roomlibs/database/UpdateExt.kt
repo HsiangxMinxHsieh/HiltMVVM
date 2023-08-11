@@ -6,54 +6,52 @@ import com.timmymike.logtool.loge
 
 object UpdateExt {
 
-
 //
-    /**DB 範例版本號升級 20230810*/
-    val MIGRATION_1_2: Migration = object : Migration(1, 2) {
-        override fun migrate(db: SupportSQLiteDatabase) {
-            //DB 版本號升級
-            val map = mutableMapOf<String, String>()
-            map["id"] = "INTEGER"
-            map["name"] = "TEXT"
-            map["client_id"] = "TEXT"
-            map["updateTime"] = "INTEGER"
-            createTable(
-                db,
-                "PersonEntity",
-                map.keys.toTypedArray(), // Key 的 array
-                map.values.toTypedArray(), // Type 的 array
-                arrayOf("id") // PrimaryKey
-            )
-        }
-    }
-
+//    /**DB 範例版本號升級 20230811*/
+//    val MIGRATION_1_2: Migration = object : Migration(1, 2) {
+//        override fun migrate(db: SupportSQLiteDatabase) {
+//            //DB 版本號升級
+//            val map = mutableMapOf<String, String>()
+//            map["id"] = "INTEGER"
+//            map["name"] = "TEXT"
+//            map["client_id"] = "TEXT"
+//            map["updateTime"] = "INTEGER"
+//            createTable(
+//                db,
+//                "PersonEntity",
+//                map.keys.toTypedArray(), // Key 的 array
+//                map.values.toTypedArray(), // Type 的 array
+//                arrayOf("id") // PrimaryKey
+//            )
+//        }
+//    }
 //
-//    /**DB 範例版本號升級 20230810*/
+//    /**DB 範例版本號升級 20230811 */
 //    val MIGRATION_2_3: Migration = object : Migration(2, 3) {
 //        override fun migrate(db: SupportSQLiteDatabase) {
 //            //DB 版本號升級
-//            addColumn(db, "SampleData", "value7", "TEXT")
+//            deleteColumn(db, "SampleData", "client_id")
+//        }
+//    }
+////
+//    /**DB 範例版本號升級 20230811*/
+//    val MIGRATION_3_4: Migration = object : Migration(3, 4) {
+//        override fun migrate(db: SupportSQLiteDatabase) {
+//            //DB 版本號升級
+//            addColumn(db, "SampleData", "client_id", "TEXT")
 //        }
 //    }
 
-    /**DB 範例版本號升級 20230810 */
-    val MIGRATION_2_3: Migration = object : Migration(2, 3) {
-        override fun migrate(db: SupportSQLiteDatabase) {
-            //DB 版本號升級
-            deleteColumn(db, "PersonEntity", "client_id")
-        }
-    }
-
     /**
      * 修改資料庫欄位的步驟：
-     * 0.將Package table 內的 entity ， 依照想要的做修正
+     * 0.將Package table 內的 entity ， 依照想要的做修正 // 注意，若資料表有新增欄位，必須要可以為null。(先前的資料不存在)
      * 1.新增 MIGRATION 變數，並確定Migration(old,new) 的old和new是正確的
      * 2.將新增之 MIGRATION變數 加入至 availableMigration 中
      * 3.修改  [databaseVersion] 為 new Version
      * */
 
-    val availableMigration = arrayOf<Migration>(MIGRATION_1_2, MIGRATION_2_3/*MIGRATION_2_3,  MIGRATION_3_4, MIGRATION_4_5*/)
-    const val databaseVersion = 3
+    val availableMigration = arrayOf<Migration>(/*MIGRATION_1_2, MIGRATION_2_3,  MIGRATION_3_4, MIGRATION_4_5*/)
+    const val databaseVersion = 1
 
     /**
      * 新增資料表的步驟：

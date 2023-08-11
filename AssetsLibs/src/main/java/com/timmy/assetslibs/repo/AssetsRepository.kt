@@ -5,9 +5,9 @@ import com.timmymike.logtool.loge
 import com.timmymike.logtool.toDataBean
 
 /**
- *  author: timmy Hsieh
+ *  author: Timmy
  *  date  : 2023/07/31
- *  desc  : 取得Assets內的Json資料，並自動轉型為傳入類別。
+ *  desc  : 取得Assets內的Json資料，並支援自動轉型為傳入類別。
  */
 
 class AssetsRepository(val context: Context) {

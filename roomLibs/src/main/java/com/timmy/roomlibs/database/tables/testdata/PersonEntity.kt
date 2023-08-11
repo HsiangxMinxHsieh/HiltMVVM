@@ -6,18 +6,16 @@ import com.timmymike.timetool.toDate
 import com.timmymike.timetool.toString
 
 /**
- * <pre>
- *     author: dhl
- *     date  : 2020/6/30
- *     desc  :
- * </pre>
+ *     author: Timmy
+ *     date  : 2023/08/11
+ *     desc  : 測試用資料Entity
  */
 
 @Entity
 data class PersonEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
-//    val client_id: String = "",
+//    val client_id: String? = "",
     val updateTime: Long = System.currentTimeMillis()
 ) {
     override fun toString(): String {

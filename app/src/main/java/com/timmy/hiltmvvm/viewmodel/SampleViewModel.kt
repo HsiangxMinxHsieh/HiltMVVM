@@ -7,10 +7,10 @@ import com.timmy.assetslibs.repo.GetAPIRepository
 import com.timmy.base.data.SampleDataFromAPI
 import com.timmy.datastorelibs.repo.DataStoreRepository
 import com.timmy.roomlibs.database.tables.sample.SampleData
-import com.timmy.roomlibs.repo.PersonRepo
 import com.timmy.roomlibs.repo.RoomRepo
 import com.timmy.sharedpreferencelibs.repo.SharedPreferencesRepository
 import com.timmymike.logtool.loge
+import com.timmymike.logtool.toDataBeanList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -20,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SampleViewModel @Inject constructor(
     private val roomRepo: RoomRepo,
-    private val personRepo: PersonRepo,
     private val spRepo: SharedPreferencesRepository,
     private val dsRepo: DataStoreRepository,
     private val asRepo: AssetsRepository,
@@ -49,6 +48,9 @@ class SampleViewModel @Inject constructor(
         }
     }
 
+    // AssetsRepository
+    fun getAssetListData() = asRepo.getAssetsContent("name.json").toDataBeanList<String>()
+
     // SharedPreferencesRepository
     fun saveSampleDataToSP(value: SampleDataFromAPI) {
         spRepo.sampleData = value
@@ -68,12 +70,13 @@ class SampleViewModel @Inject constructor(
     fun getLiveDataInRealm() = getAPIRepository.getLiveDataInRealm()
 
     // Room Database
-    fun savePerson(name: String) = personRepo.insertPersonData(name)
+    fun savePerson(name: String) = roomRepo.insertPersonData(name)
+
+    fun getPersonData() = roomRepo.getPersonDataList()
 
     fun saveSampleDataToRoom(value: List<SampleData>) = roomRepo.insertSampleDataList(value)
 
     fun getRoomSampleDataSize() = roomRepo.getSampleDataList().size
 
-    fun getPersonData() = personRepo.getPersonDataList()
 
 }
