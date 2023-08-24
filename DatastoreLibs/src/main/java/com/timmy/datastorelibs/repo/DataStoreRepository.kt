@@ -64,7 +64,7 @@ class DataStoreRepository @Inject constructor(context: Application) {
         get() = runBlocking {
             kotlin.runCatching {
                 readData(sampleDataKey).firstOrNull()
-                    ?.toDataBean(SampleDataFromAPI::class.java)
+                    ?.toDataBean<SampleDataFromAPI>()
             }.getOrNull() ?: SampleDataFromAPI()
         }
         set(value) = runBlocking { saveData(sampleDataKey, value.toJson()) }

@@ -2,10 +2,12 @@ package com.timmy.hiltmvvm.ui
 
 import android.os.Bundle
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.activity.viewModels
 import com.timmy.hiltmvvm.R
 import com.timmy.hiltmvvm.databinding.ActivitySampleBinding
 import com.timmy.hiltmvvm.viewmodel.SampleViewModel
+import com.timmy.roomlibs.database.tables.sample.SampleEntity
 import com.timmymike.componenttool.BaseActivity
 import com.timmymike.logtool.*
 import com.timmymike.viewtool.*
@@ -27,7 +29,7 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
             click {
                 loge("1觸發點擊！")
                 isSelected = !isSelected
-                viewModel.savePerson(nameList.random())
+                viewModel.savePerson(nameList?.random() ?: return@click)
 
                 viewModel.getPersonData().toList().logeAll("測試資料輸出=>")
             }
@@ -52,7 +54,9 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
             setRippleBackground(android.R.color.holo_red_dark)
 
         }
-        (binding.root as? ViewGroup)?.resetLayoutTextSize()
+        (binding.root as? ViewGroup)?.addView(ImageView(this))//resetLayoutTextSize()
+
+
         viewModel.getLiveDataInRealm().observe(this) {
             logd("API取得結果是=>${it.toJson()}")
 
@@ -62,7 +66,8 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
             viewModel.saveSampleDataToDataStore(it)
             loge("DataStore 儲存後取出的範例資料是=>${viewModel.getSampleDataFromDataStore()}")
 
-            viewModel.saveSampleDataToRoom(it.records.toJson().toDataBeanList())
+            viewModel.saveSampleDataToRoomByRecordList(it.records)      // 傳統作法：將傳入的列表的內容一個一個轉為目標Entity
+            viewModel.saveSampleDataToRoomBySampleList(it.records.toJson().toDataBeanList<SampleEntity>() ?: return@observe)  // 簡化作法：將傳入的列表透過Json轉換，直接轉換為簡單的列表。
             loge("Room 儲存後取出的範例資料數量是=>${viewModel.getRoomSampleDataSize()}")
 
         }

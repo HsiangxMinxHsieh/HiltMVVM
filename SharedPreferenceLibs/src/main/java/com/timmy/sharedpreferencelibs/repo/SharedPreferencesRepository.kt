@@ -7,7 +7,9 @@ import com.timmymike.logtool.toJson
 import javax.inject.Inject
 
 /**
- * 同步的取值方法
+ *     author: Timmy
+ *     date  : 2023/08/09
+ *     desc  : 同步的取值方法
  */
 class SharedPreferencesRepository @Inject constructor(context: Context) {
 
@@ -43,7 +45,7 @@ class SharedPreferencesRepository @Inject constructor(context: Context) {
 //        set(value) = sp.edit().putBoolean(SETTING_DEVICE_TOKEN, value).apply()
 
     var sampleData: SampleDataFromAPI
-        get() = kotlin.runCatching { sp.getString(SAMPLE_INFO, "{}")?.toDataBean(SampleDataFromAPI::class.java) }.getOrNull() ?: SampleDataFromAPI()
+        get() = kotlin.runCatching { sp.getString(SAMPLE_INFO, "{}")?.toDataBean<SampleDataFromAPI>() }.getOrNull() ?: SampleDataFromAPI()
         set(value) = sp.edit().putString(SAMPLE_INFO, value.toJson()).apply()
 //
 //    var sampleCount: Int

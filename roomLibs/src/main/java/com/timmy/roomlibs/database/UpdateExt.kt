@@ -30,7 +30,7 @@ object UpdateExt {
 //    val MIGRATION_2_3: Migration = object : Migration(2, 3) {
 //        override fun migrate(db: SupportSQLiteDatabase) {
 //            //DB 版本號升級
-//            deleteColumn(db, "SampleData", "client_id")
+//            deleteColumn(db, "SampleEntity", "client_id")
 //        }
 //    }
 ////
@@ -38,7 +38,7 @@ object UpdateExt {
 //    val MIGRATION_3_4: Migration = object : Migration(3, 4) {
 //        override fun migrate(db: SupportSQLiteDatabase) {
 //            //DB 版本號升級
-//            addColumn(db, "SampleData", "client_id", "TEXT")
+//            addColumn(db, "SampleEntity", "client_id", "TEXT")
 //        }
 //    }
 

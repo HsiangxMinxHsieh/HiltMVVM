@@ -1,12 +1,19 @@
 package com.timmy.roomlibs.repo
 
+import com.timmy.base.data.Record
 import com.timmy.roomlibs.database.tables.sample.SampleDao
-import com.timmy.roomlibs.database.tables.sample.SampleData
+import com.timmy.roomlibs.database.tables.sample.SampleEntity
+import com.timmy.roomlibs.database.tables.sample.insert
 import com.timmy.roomlibs.database.tables.testdata.PersonDao
 import com.timmy.roomlibs.database.tables.testdata.PersonEntity
 import javax.inject.Inject
 
-class RoomRepo @Inject constructor(
+/**
+ *     author: Timmy
+ *     date  : 2023/08/09
+ *     desc  : 同步的取值方法
+ */
+class RoomRepository @Inject constructor(
     private val personDao: PersonDao,
     private val sampleDao: SampleDao
 ) {
@@ -18,7 +25,11 @@ class RoomRepo @Inject constructor(
         personDao.insert(person)
     }
 
-    fun insertSampleDataList(dataList: List<SampleData>) {
+    fun insertSampleDataListByRecord(dataList: List<Record>) {
+        sampleDao.insert(dataList)
+    }
+
+    fun insertSampleDataListBySample(dataList: List<SampleEntity>) {
         sampleDao.insert(dataList)
     }
 

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class SampleData(
+data class SampleEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val item1: String = "",
     val item2: String = "",

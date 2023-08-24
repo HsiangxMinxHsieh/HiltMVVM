@@ -41,7 +41,7 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
 
     // timmymike tool
-    api 'com.github.timmymike:LogTool:1.0.7'
+    api 'com.github.timmymike:LogTool:1.1.1'
     api 'com.github.timmymike:componentTool:1.1.0'
     api 'com.github.timmymike:ViewTool:1.1.1'
     api 'com.github.timmymike:TimeTool:1.0.1'

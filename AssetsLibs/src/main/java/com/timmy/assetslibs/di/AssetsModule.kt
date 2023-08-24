@@ -10,9 +10,9 @@ import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 /**
- *  author: Timmy
- *  date  : 2023/07/31
- *  desc  : 注入 AssetsRepository 的類別
+ *    author: Timmy
+ *    date  : 2023/07/31
+ *    desc  : 注入 AssetsRepository 的類別
  */
 
 @Module
