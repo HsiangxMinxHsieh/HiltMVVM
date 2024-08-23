@@ -36,24 +36,17 @@ data class Field(
 )
 
 data class Record(
-    @SerializedName("item1")
-    val item1: String = "",
-    @SerializedName("item2")
-    val item2: String = "",
-    @SerializedName("value1")
-    val value1: String = "",
-    @SerializedName("value2")
-    val value2: String = "",
-    @SerializedName("value3")
-    val value3: String = "",
-    @SerializedName("value4")
-    val value4: String = "",
-    @SerializedName("value5")
-    val value5: String = "",
-    @SerializedName("value6")
-    val value6: String = "",
-    @SerializedName("value7")
-    val value7: String = ""
+    @SerializedName("site")
+    val site: String = "",
+    @SerializedName("county")
+    val county: String = "",
+    @SerializedName("pm25")
+    val pm25: String = "",
+    @SerializedName("datacreationdate")
+    val datacreationdate: String = "",
+    @SerializedName("itemunit")
+    val itemunit: String = ""
+
 )
 
 data class Info(

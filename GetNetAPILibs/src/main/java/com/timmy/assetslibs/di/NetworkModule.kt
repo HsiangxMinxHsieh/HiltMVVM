@@ -1,10 +1,13 @@
 package com.timmy.assetslibs.di
 
+import com.timmy.getnetapi.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor.*
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -21,6 +24,16 @@ class NetworkModule {
             .connectTimeout(20, TimeUnit.SECONDS)
             .readTimeout(20, TimeUnit.SECONDS)
             .writeTimeout(20, TimeUnit.SECONDS)
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                setLevel(
+                    if (BuildConfig.DEBUG) {
+                        // Debug 模式下才開啟
+                        HttpLoggingInterceptor.Level.BODY
+                    } else {
+                        HttpLoggingInterceptor.Level.NONE
+                    }
+                )
+            })
             .build()
     }
 
@@ -29,7 +42,7 @@ class NetworkModule {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://data.epa.gov.tw/api/v2/")
+            .baseUrl("https://data.moenv.gov.tw/api/v2/")
             .client(okHttpClient)
             .build()
     }

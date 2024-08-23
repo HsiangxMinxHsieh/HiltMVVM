@@ -6,13 +6,9 @@ import androidx.room.PrimaryKey
 @Entity
 data class SampleEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val item1: String = "",
-    val item2: String = "",
-    val value1: String = "",
-    val value2: String = "",
-    val value3: String = "",
-    val value4: String = "",
-    val value5: String = "",
-    val value6: String = "",
-    val value7: String? = ""
+    val site: String = "",
+    val county: String = "",
+    val pm25: String = "",
+    val datacreationdate: String = "",
+    val itemunit: String = ""
 )

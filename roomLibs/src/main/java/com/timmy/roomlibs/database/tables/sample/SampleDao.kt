@@ -36,15 +36,11 @@ fun SampleDao.insert(recordList: List<Record>) {
         recordList.forEach {
             add(
                 SampleEntity(
-                    item1 = it.item1,
-                    item2 = it.item2,
-                    value1 = it.value1,
-                    value2 = it.value2,
-                    value3 = it.value3,
-                    value4 = it.value4,
-                    value5 = it.value5,
-                    value6 = it.value6,
-                    value7 = it.value7,
+                    site = it.site,
+                    county = it.county,
+                    pm25 = it.pm25,
+                    datacreationdate = it.datacreationdate,
+                    itemunit = it.itemunit,
                 )
             )
         }
