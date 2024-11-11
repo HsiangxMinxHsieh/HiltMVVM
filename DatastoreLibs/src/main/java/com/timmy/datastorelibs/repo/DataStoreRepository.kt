@@ -1,14 +1,25 @@
 package com.timmy.datastorelibs.repo
 
-import android.app.Application
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.*
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.timmy.base.data.SampleDataFromAPI
 import com.timmymike.logtool.toDataBean
 import com.timmymike.logtool.toJson
-import kotlinx.coroutines.flow.*
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
 import javax.inject.Inject
@@ -16,12 +27,12 @@ import javax.inject.Inject
 /**
  * 非同步或同步皆可的取值方法
  */
-class DataStoreRepository @Inject constructor(context: Application) {
 
+class DataStoreRepository @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
-    private val Context._dataStore: DataStore<Preferences> by preferencesDataStore(
-        name = DATASTORE_NAME,
-    )
+    private val Context._dataStore: DataStore<Preferences> by preferencesDataStore(name = DATASTORE_NAME)
 
     val dataStore: DataStore<Preferences> = context._dataStore
 
@@ -69,6 +80,18 @@ class DataStoreRepository @Inject constructor(context: Application) {
         }
         set(value) = runBlocking { saveData(sampleDataKey, value.toJson()) }
 
+
+    private suspend fun getSampleString(): String {
+        return readData(sampleStringKey, "default value").first()
+    }
+
+    suspend fun setSampleString(value: String) {
+        saveData(sampleStringKey, value)
+    }
+
+    val getSampleDataFlow: Flow<String> = flow {
+        emit(getSampleString())
+    }
     var sampleString: String
         get() = runBlocking { readData(sampleStringKey).first() }
         set(value) = runBlocking { saveData(sampleStringKey, value) }
@@ -80,7 +103,6 @@ class DataStoreRepository @Inject constructor(context: Application) {
     var sampleInt: Int
         get() = runBlocking { readData(sampleIntKey).first() }
         set(value) = runBlocking { saveData(sampleIntKey, value) }
-
 
 
 }

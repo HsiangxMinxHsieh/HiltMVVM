@@ -13,7 +13,6 @@ import com.timmy.sharedpreferencelibs.repo.SharedPreferencesRepository
 import com.timmymike.logtool.loge
 import com.timmymike.logtool.toDataBeanList
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -29,13 +28,13 @@ class SampleViewModel @Inject constructor(
 
     fun getData() {
 
-        // DataStoreRepository 非同步方案
+        // DataStoreRepository 同步與非同步方案
         viewModelScope.launch {
-            dsRepo.sampleString = "bbbggg4417723"
-            loge("DataStore取得同步結果=>[${dsRepo.sampleString}]")
-            (dsRepo.readData(DataStoreRepository.sampleStringKey, "Default Value") as Flow<String>).collect { storedData -> loge("DataStore取得非同步結果=>[$storedData]") }
+            dsRepo.sampleString = "bbbggg4417723" // 使用同步方案設定內容
+            loge("DataStore取得同步結果=>[${dsRepo.sampleString}]") // 使用同步方案取得結果
+            dsRepo.setSampleString("bbbxxx0123") // 使用非同步方案設定內容
+            dsRepo.getSampleDataFlow.collect { storedData -> loge("DataStore取得非同步結果=>[$storedData]") } // 使用非同步方案取得結果
         }
-
         // GetAPIRepository
         viewModelScope.launch {
             getAPIRepository.getDataFromAPI()
